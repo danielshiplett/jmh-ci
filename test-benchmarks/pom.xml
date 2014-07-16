@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>jmh-ci</groupId>
+        <artifactId>jhm-ci-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>test-benchmarks</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Test JMH Benchmark Tests</name>
+
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
+    <properties>
+        <benchmark.fail-on-error>true</benchmark.fail-on-error>
+        <benchmark.gc-between-iterations>true</benchmark.gc-between-iterations>
+        <benchmark.jvm-args>-server -Xms1G -Xmx1G -XX:+AlwaysPreTouch</benchmark.jvm-args>
+        <benchmark.results-file>${project.build.directory}/${project.artifactId}.csv</benchmark.results-file>
+        <benchmark.results-format>SCSV</benchmark.results-format>
+
+        <benchmark.synchronize-iterations>false</benchmark.synchronize-iterations>
+        <benchmark.verbosity>normal</benchmark.verbosity>
+        <benchmark.warmup-mode>INDI</benchmark.warmup-mode>
+
+        <benchmarks>.*</benchmarks>
+        <jmh.version>0.6</jmh.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <source.version>1.7</source.version>
+        
+        <slf4j.version>1.7.7</slf4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.3</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${source.version}</source>
+                    <target>${source.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>run-benchmarks</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath />
+                                <argument>org.openjdk.jmh.Main</argument>
+                                <argument>-si</argument>
+                                <argument>${benchmark.synchronize-iterations}</argument>
+                                <argument>-gc</argument>
+                                <argument>${benchmark.gc-between-iterations}</argument>
+                                <argument>-foe</argument>
+                                <argument>${benchmark.fail-on-error}</argument>
+                                <argument>-v</argument>
+                                <argument>${benchmark.verbosity}</argument>
+                                <argument>-rff</argument>
+                                <argument>${benchmark.results-file}</argument>
+                                <argument>-jvmArgs</argument>
+                                <argument>${benchmark.jvm-args}</argument>
+                                <argument>-rf</argument>
+                                <argument>${benchmark.results-format}</argument>
+                                <argument>-wm</argument>
+                                <argument>${benchmark.warmup-mode}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

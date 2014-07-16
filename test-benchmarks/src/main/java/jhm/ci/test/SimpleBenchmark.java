@@ -18,6 +18,13 @@ import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.logic.BlackHole;
 
+/**
+ * A really simple benchmark that will create list of Integers and then use the
+ * BlackHole to consume the list entries. This should provide a relatively quick
+ * benchmark that we can run when testing the plugin.
+ * 
+ * @author ddshipl
+ */
 @State(Thread)
 @BenchmarkMode(AverageTime)
 @OutputTimeUnit(NANOSECONDS)

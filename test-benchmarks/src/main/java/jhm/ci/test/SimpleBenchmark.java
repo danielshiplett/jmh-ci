@@ -1,4 +1,4 @@
-package c3.ingest.benchmarks.parsers;
+package jhm.ci.test;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;

@@ -1,4 +1,4 @@
-package c3.hpi;
+package jmh.ci.plugin;
 
 import hudson.model.Action;
 import hudson.model.AbstractBuild;

@@ -21,8 +21,8 @@
         <benchmark.fail-on-error>true</benchmark.fail-on-error>
         <benchmark.gc-between-iterations>true</benchmark.gc-between-iterations>
         <benchmark.jvm-args>-server -Xms1G -Xmx1G -XX:+AlwaysPreTouch</benchmark.jvm-args>
-        <benchmark.results-file>${project.build.directory}/${project.artifactId}.csv</benchmark.results-file>
-        <benchmark.results-format>SCSV</benchmark.results-format>
+        <benchmark.results-file>${project.build.directory}/jmh.json</benchmark.results-file>
+        <benchmark.results-format>JSON</benchmark.results-format>
 
         <benchmark.synchronize-iterations>false</benchmark.synchronize-iterations>
         <benchmark.verbosity>normal</benchmark.verbosity>

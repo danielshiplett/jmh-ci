@@ -1,0 +1,43 @@
+[
+    {
+        "benchmark" : "jhm.ci.test.SimpleBenchmark.benchmark",
+        "mode" : "avgt",
+        "threads" : 1,
+        "forks" : 1,
+        "warmupIterations" : 1,
+        "warmupTime" : "2 s",
+        "measurementIterations" : 2,
+        "measurementTime" : "2 s",
+        "primaryMetric" : {
+            "score" : 120.08231863273801,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 113.99123144383154,
+                "50.0" : 120.4261700547009,
+                "90.0" : 126.86110866557027,
+                "95.0" : 126.86110866557027,
+                "99.0" : 126.86110866557027,
+                "99.9" : 126.86110866557027,
+                "99.99" : 126.86110866557027,
+                "99.999" : 126.86110866557027,
+                "99.9999" : 126.86110866557027,
+                "100.0" : 126.86110866557027
+            },
+            "scoreUnit" : "ns/op",
+            "rawData" : [
+                [
+                    113.99123144383154,
+                    126.86110866557027
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

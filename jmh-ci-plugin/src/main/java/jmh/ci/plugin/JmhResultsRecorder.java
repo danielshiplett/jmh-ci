@@ -11,10 +11,17 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
+import jmh.ci.plugin.types.PrimaryMetric;
+import jmh.ci.plugin.types.Result;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import com.google.common.collect.Lists;
@@ -39,11 +46,34 @@ public class JmhResultsRecorder extends Recorder {
 			BuildListener listener) throws InterruptedException, IOException {
 
 		logger = listener.getLogger();
-		logger.println("Recording Caliper results: " + results);
+		logger.println("Recording JMH results: " + results);
 
 		List<FilePath> files = getFileList(build);
 
+		for (FilePath fp : files) {
+			readResultsFromJsonFile(fp);
+		}
+
 		return true;
+	}
+
+	private void readResultsFromJsonFile(FilePath fp)
+			throws JsonParseException, JsonMappingException, IOException {
+		Json j = new Json();
+
+		FileInputStream is = new FileInputStream(fp.getRemote());
+		JsonParser jp = j.getJf().createJsonParser(is);
+
+		Result[] results = j.getOm().readValue(jp, Result[].class);
+
+		logger.println(String.format("results.size: %d", results.length));
+
+		for (Result r : results) {
+			logger.println(String.format("r.benchmark: %s", r.getBenchmark()));
+			PrimaryMetric pm = r.getPrimaryMetric();
+			logger.println(String.format("r.primary.score: %f %s",
+					pm.getScore(), pm.getScoreUnit()));
+		}
 	}
 
 	public BuildStepMonitor getRequiredMonitorService() {

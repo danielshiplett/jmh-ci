@@ -26,9 +26,7 @@ public class JmhBuildAction implements Action {
 	 * For JmhBuildAction/summary.jelly
 	 */
 	public String getSummary() {
-
-		return String
-				.format("Collected  timing result, memory result, found regression");
+		return String.format("Collected JMH results");
 	}
 
 	public String getIconFileName() {
